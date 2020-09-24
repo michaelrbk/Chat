@@ -1,16 +1,22 @@
 ﻿"use strict";
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/Chat").build();
-
+var countMsg = 0;
+var maxMsg = 50; //Show only the last x messages
 //Disable send button until connection is established  
 document.getElementById("sendBtn").disabled = true;
 
 connection.on("ReceiveMessage", function (user, message) {
     var msg = message.replace(/&/g, "&").replace(/</g, "<").replace(/>/g, ">");
-    var encodedMsg = user + " says " + msg;
+    var encodedMsg = user + "-" + new Date().toUTCString() + " :" + msg;
     var li = document.createElement("li");
+    countMsg++;
+    if (countMsg >= maxMsg) {
+        document.getElementById("ulmessages").lastChild.remove();
+    };
     li.textContent = encodedMsg;
-    document.getElementById("ulmessages").appendChild(li);
+    document.getElementById("ulmessages").prepend(li);
+
 });
 
 connection.start().then(function () {
