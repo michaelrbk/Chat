@@ -13,6 +13,7 @@ namespace Chat.QueueManager.Services
     {
         private static Settings _settings;
         private static IModel _channel;
+        private static CommandInterpreterServices _command;
         public QueueManagerService(IOptions<Settings> settings)
         {
             _settings = settings.Value;
@@ -52,6 +53,10 @@ namespace Chat.QueueManager.Services
             {
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
+                if (queue == "ChatBot")
+                {
+                    CommandInterpreterServices cmd = new CommandInterpreterServices();
+                }
                 Console.WriteLine(" [x] Received {0}", message);
             };
             _channel.BasicConsume(queue: queue,

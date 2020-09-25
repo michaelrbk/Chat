@@ -1,8 +1,8 @@
 using Chat.App.App;
 using Chat.App.Interfaces;
 using Chat.Models;
-using Chat.QueueManager.Interfaces;
-using Chat.QueueManager.Services;
+using Chat.QueueConsumer.Interfaces;
+using Chat.QueueConsumer.Services;
 using Chat.Services.Interfaces;
 using Chat.Services.Services;
 using Microsoft.Extensions.Configuration;
@@ -30,7 +30,7 @@ namespace ChatBotWorker
                     //Services
                     services.AddTransient<IChatBotService, ChatBotService>();
                     //Infra
-                    services.AddTransient<IQueueManagerService, QueueManagerService>();
+                    services.AddTransient<IQueueConsumerService, QueueConsumerService>();
                 });
     }
 }

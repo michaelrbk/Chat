@@ -1,5 +1,5 @@
 ﻿using Chat.Models;
-using Chat.QueueManager.Services;
+using Chat.QueueProducer.Services;
 using Chat.Services.Interfaces;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
@@ -14,10 +14,10 @@ namespace Chat.Services.Services
         {
             _settings = settings;
         }
-        private static QueueManagerService QueueManagerService()
+        private static QueueProducerService QueueProducerService()
         {
-            QueueManagerService queueManager = new QueueManagerService(_settings);
-            return queueManager;
+            QueueProducerService queueProducer = new QueueProducerService(_settings);
+            return queueProducer;
         }
 
         public async Task<bool> SendMessage(Message message)
@@ -30,7 +30,7 @@ namespace Chat.Services.Services
                     Message = message.MessageText,
                     Queue = "ChatBot"
                 };
-                QueueManagerService().AddToQueue(queueMessage);
+                QueueProducerService().AddToQueue(queueMessage);
                 return false;
             }
 

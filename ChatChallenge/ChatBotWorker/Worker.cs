@@ -26,7 +26,7 @@ namespace ChatBotWorker
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                await _chatBotApp.ProcessQueue();
+                _chatBotApp.ProcessQueue();
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
                 await Task.Delay(1000, stoppingToken);
             }

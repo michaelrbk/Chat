@@ -1,5 +1,5 @@
-﻿using Chat.Models;
-using Chat.QueueManager.Services;
+﻿using Chat.CommandInterpreter.Services;
+using Chat.Models;
 using Microsoft.Extensions.Options;
 using Xunit;
 using Xunit.Abstractions;
@@ -11,7 +11,7 @@ namespace Chat.Test
         private static ITestOutputHelper _output;
         private static Settings _settings;
         private static IOptions<Settings> _options;
-        private static CommandInterpreter _commandInterpreter;
+        private static CommandInterpreterService _commandInterpreter;
         public CommandInterpreterTests(ITestOutputHelper output)
         {
             _output = output;
@@ -19,7 +19,7 @@ namespace Chat.Test
 
             _settings = new Settings() { QueueUrl = "localhost", StockWebServiceUrl = "https://stooq.com/q/l/?s={stock_code}&f=sd2t2ohlcv&h&e=csv" };
             _options = Options.Create(_settings);
-            _commandInterpreter = new CommandInterpreter(_options);
+            _commandInterpreter = new CommandInterpreterService(_options);
         }
 
         [Fact]

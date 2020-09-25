@@ -1,6 +1,5 @@
 ﻿using Chat.App.Interfaces;
 using Chat.Services.Interfaces;
-using System.Threading.Tasks;
 
 namespace Chat.App.App
 {
@@ -11,9 +10,9 @@ namespace Chat.App.App
         {
             _chatBotService = chatBotService;
         }
-        public Task ProcessQueue()
+        public void ProcessQueue()
         {
-            return _chatBotService.ReceiveFromQueue();
+            _chatBotService.ReceiveFromQueue();
         }
     }
 }

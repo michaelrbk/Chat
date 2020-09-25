@@ -1,28 +1,28 @@
-﻿using Chat.Models;
+﻿using Chat.CommandInterpreter.Interfaces;
+using Chat.Models;
 using Chat.Models.Stock;
-using Chat.QueueManager.Interfaces;
+using Chat.QueueProducer.Services;
 using Chat.WebService.Services;
 using Microsoft.Extensions.Options;
-using System.Threading.Tasks;
 
-namespace Chat.QueueManager.Services
+namespace Chat.CommandInterpreter.Services
 {
-    public class CommandInterpreter : ICommandInterpreter
+    public class CommandInterpreterService : ICommandInterpreterService
     {
         private static StockWebService _stockWS;
-        private static QueueManagerService _queueManager;
+        private static QueueProducerService _queueProducerServices;
         private static Settings _settings;
 
 
-        public CommandInterpreter(IOptions<Settings> settings)
+        public CommandInterpreterService(IOptions<Settings> settings)
         {
             _settings = settings.Value;
-            _queueManager = new QueueManagerService(settings);
+            _queueProducerServices = new QueueProducerService(settings);
             _stockWS = new StockWebService(settings);
         }
 
 
-        public Task InterpretCommand(string message)
+        public void InterpretCommand(string message)
         {
 
             var queueMessage = new QueueMessage
@@ -57,8 +57,8 @@ namespace Chat.QueueManager.Services
                 //Return inválid command to chat queue
                 queueMessage.Message = "Invalid Command";
             }
-            _queueManager.AddToQueue(queueMessage);
-            return Task.CompletedTask;
+            _queueProducerServices.AddToQueue(queueMessage);
+            //return Task.CompletedTask;
         }
 
     }

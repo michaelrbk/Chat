@@ -1,8 +1,7 @@
 ﻿using Chat.Models;
-using Chat.QueueManager.Services;
+using Chat.QueueConsumer.Services;
 using Chat.Services.Interfaces;
 using Microsoft.Extensions.Options;
-using System.Threading.Tasks;
 
 namespace Chat.Services.Services
 {
@@ -14,15 +13,16 @@ namespace Chat.Services.Services
             _settings = settings;
         }
 
-        private static QueueManagerService QueueManagerService()
+        private static QueueConsumerService QueueConsumerService()
         {
-            QueueManagerService queueManager = new QueueManagerService(_settings);
+            QueueConsumerService queueManager = new QueueConsumerService(_settings);
             return queueManager;
         }
 
-        public Task ReceiveFromQueue()
+        public void ReceiveFromQueue()
         {
-            return QueueManagerService().GetFromQueue("ChatBot");
+            QueueConsumerService().GetFromQueue("ChatBot");
+            //return Task.CompletedTask;
         }
     }
 }

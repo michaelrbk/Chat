@@ -1,8 +1,8 @@
 using Chat.App.App;
 using Chat.App.Interfaces;
 using Chat.Models;
-using Chat.QueueManager.Interfaces;
-using Chat.QueueManager.Services;
+using Chat.QueueConsumer.Interfaces;
+using Chat.QueueConsumer.Services;
 using Chat.Services.Interfaces;
 using Chat.Services.Services;
 using ChatWebApp.Data;
@@ -45,7 +45,7 @@ namespace ChatWebApp
             //Services
             services.AddTransient<IChatHubService, ChatHubService>();
             //Infra
-            services.AddTransient<IQueueManagerService, QueueManagerService>();
+            services.AddTransient<IQueueConsumerService, QueueConsumerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

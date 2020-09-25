@@ -3,7 +3,6 @@ using Chat.QueueProducer.Interfaces;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Chat.QueueProducer.Services
 {
@@ -18,7 +17,7 @@ namespace Chat.QueueProducer.Services
             var connection = factory.CreateConnection();
             _channel = connection.CreateModel();
         }
-        public Task AddToQueue(QueueMessage queueMessage)
+        public void AddToQueue(QueueMessage queueMessage)
         {
             _channel.QueueDeclare(queue: queueMessage.Queue,
                                  durable: false,
@@ -32,7 +31,7 @@ namespace Chat.QueueProducer.Services
                                  routingKey: queueMessage.Queue,
                                  basicProperties: null,
                                  body: body);
-            return Task.CompletedTask;
+            //return Task.CompletedTask;
         }
     }
 }

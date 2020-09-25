@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-
-namespace Chat.Services.Interfaces
+﻿namespace Chat.Services.Interfaces
 {
     public interface IChatBotService
     {
-        public Task ReceiveFromQueue();
+        public void ReceiveFromQueue();
     }
 }
