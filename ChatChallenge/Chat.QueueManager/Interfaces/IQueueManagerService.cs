@@ -5,7 +5,7 @@ namespace Chat.QueueManager.Interfaces
 {
     public interface IQueueManagerService
     {
-        public Task AddToQueue(QueueMessage queueMessage);
-        public Task GetFromQueue(string queue);
+        Task AddToQueue(QueueMessage queueMessage);
+        Task GetFromQueue(string queue);
     }
 }
