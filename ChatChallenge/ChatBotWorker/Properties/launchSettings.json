@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "ChatBotWorker": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

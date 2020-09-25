@@ -1,4 +1,5 @@
-﻿using ChatWebApp.Services;
+﻿using Chat.App.Interfaces;
+using Chat.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
@@ -6,14 +7,19 @@ using System.Threading.Tasks;
 namespace ChatWebApp.Hub
 {
     [Authorize]
-    public class Chat : Microsoft.AspNetCore.SignalR.Hub
+    public class ChatHub : Microsoft.AspNetCore.SignalR.Hub
     {
+        private readonly IChatHubApp _chatHubApp;
+        public ChatHub(IChatHubApp chatHubApp)
+        {
+            _chatHubApp = chatHubApp;
+        }
         public async Task SendMessage(string message)
         {
             ///stock=stock_code
             if (message.StartsWith("/"))
             {
-                SendQueue.SendMsg(message);
+                await _chatHubApp.MessageReceived(new Message { MessageText = message });
             }
             else
             {

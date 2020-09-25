@@ -1,3 +1,10 @@
+using Chat.App.App;
+using Chat.App.Interfaces;
+using Chat.Models;
+using Chat.QueueManager.Interfaces;
+using Chat.QueueManager.Services;
+using Chat.Services.Interfaces;
+using Chat.Services.Services;
 using ChatWebApp.Data;
 using ChatWebApp.Hub;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +37,15 @@ namespace ChatWebApp
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddSignalR();
+
+            //Shared Settings from appsettings.json
+            services.Configure<Settings>(Configuration.GetSection("SharedSettings"));
+            //App
+            services.AddTransient<IChatHubApp, ChatHubApp>();
+            //Services
+            services.AddTransient<IChatHubService, ChatHubService>();
+            //Infra
+            services.AddTransient<IQueueManagerService, QueueManagerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,7 +76,7 @@ namespace ChatWebApp
                    name: "default",
                    pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
-                endpoints.MapHub<Chat>("/chat");
+                endpoints.MapHub<ChatHub>("/chat");
             });
         }
     }
