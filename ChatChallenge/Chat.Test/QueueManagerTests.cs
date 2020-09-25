@@ -1,5 +1,6 @@
 ﻿using Chat.Models;
 using Chat.QueueManager.Services;
+using Chat.QueueProducer.Services;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
 using Xunit;
@@ -13,6 +14,7 @@ namespace Chat.Test
         private static Settings _settings;
         private static IOptions<Settings> _options;
         private static QueueManagerService _queueManager;
+        private static QueueProducerService _queueProducerService;
         public QueueManagerTests(ITestOutputHelper output)
         {
             _output = output;
@@ -21,6 +23,7 @@ namespace Chat.Test
             _settings = new Settings() { QueueUrl = "localhost" };
             _options = Options.Create(_settings);
             _queueManager = new QueueManagerService(_options);
+            _queueProducerService = new QueueProducerService(_options);
         }
 
         [Fact]
@@ -31,7 +34,7 @@ namespace Chat.Test
                 Message = "/stock=aapl.us",
                 Queue = "ChatBot"
             };
-            _queueManager.AddToQueue(queueMessage);
+            _queueProducerService.AddToQueue(queueMessage);
             _output.WriteLine(JsonSerializer.Serialize(queueMessage));
             Assert.True(true);
         }
