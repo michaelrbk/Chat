@@ -9,7 +9,6 @@ namespace Chat.Services.Services
     public class ChatHubService : IChatHubService
     {
         private static IOptions<Settings> _settings;
-
         public ChatHubService(IOptions<Settings> settings)
         {
             _settings = settings;
@@ -19,7 +18,6 @@ namespace Chat.Services.Services
             QueueProducerService queueProducer = new QueueProducerService(_settings);
             return queueProducer;
         }
-
         public async Task<bool> SendMessage(Message message)
         {
             //If starts with / its a command. Should be sended to the ChatBot

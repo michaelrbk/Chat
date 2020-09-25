@@ -22,7 +22,6 @@ namespace Chat.Services.Services
         public void ReceiveFromQueue()
         {
             QueueConsumerService().GetFromQueue("ChatBot");
-            //return Task.CompletedTask;
         }
     }
 }

@@ -22,6 +22,18 @@ namespace Chat.QueueConsumer.Services
             _channel = connection.CreateModel();
             _command = new CommandInterpreterService(settings);
         }
+        public string GetOneFromQueue(string queue)
+        {
+            _channel.QueueDeclare(queue: queue,
+                                durable: false,
+                                exclusive: false,
+                                autoDelete: false,
+                                arguments: null);
+
+            var data = _channel.BasicGet(queue, true);
+            var message = Encoding.UTF8.GetString(data.Body.ToArray());
+            return message;
+        }
 
         public void GetFromQueue(string queue)
         {
@@ -45,8 +57,6 @@ namespace Chat.QueueConsumer.Services
             _channel.BasicConsume(queue: queue,
                                  autoAck: true,
                                  consumer: consumer);
-
-            // return Task.CompletedTask;
         }
     }
 }

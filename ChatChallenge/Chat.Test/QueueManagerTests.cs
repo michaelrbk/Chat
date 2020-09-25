@@ -47,5 +47,14 @@ namespace Chat.Test
 
             Assert.True(true);
         }
+
+        [Fact]
+        public void GetOneFromQueueTest()
+        {
+            string Queue = "ChatHub";
+            _output.WriteLine(JsonSerializer.Serialize(_queueConsumerService.GetOneFromQueue(Queue)));
+
+            Assert.True(true);
+        }
     }
 }
