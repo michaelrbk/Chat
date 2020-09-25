@@ -10,23 +10,27 @@ namespace Chat.Test
 {
     public class StockWebServiceTests
     {
-        private readonly ITestOutputHelper _output;
-
+        private static ITestOutputHelper _output;
+        private static Settings _settings;
+        private static IOptions<Settings> _options;
+        private static StockWebService _stockWS;
         public StockWebServiceTests(ITestOutputHelper output)
         {
             _output = output;
+            //Set URL of the WS
+            _settings = new Settings() { StockWebServiceUrl = "https://stooq.com/q/l/?s={stock_code}&f=sd2t2ohlcv&h&e=csv" };
+            _options = Options.Create(_settings);
+            _stockWS = new StockWebService(_options);
         }
+
         [Fact]
         public void StockWebServiceTest()
         {
-            //Set URL of the WS
-            Settings _settings = new Settings() { StockWebServiceUrl = "https://stooq.com/q/l/?s={stock_code}&f=sd2t2ohlcv&h&e=csv" };
-            IOptions<Settings> options = Options.Create(_settings);
-            StockWebService stockWS = new StockWebService(options);
-
-            var stockRequest = new StockRequest();
-            stockRequest.StockCode = "aapl.US";
-            Stock stock = stockWS.GetStock(stockRequest).Result;
+            var stockRequest = new StockRequest
+            {
+                StockCode = "aapl.US"
+            };
+            Stock stock = _stockWS.GetStock(stockRequest).Result;
             _output.WriteLine(JsonSerializer.Serialize(stock, new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
