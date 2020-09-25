@@ -16,14 +16,10 @@ namespace ChatWebApp.Hub
         }
         public async Task SendMessage(string message)
         {
-            ///stock=stock_code
-            if (message.StartsWith("/"))
+            string identityName = Context.User.Identity.Name ?? "anonymous";
+            if (await _chatHubApp.SendMessage(new Message { MessageText = message, IdentityName = identityName }))
             {
-                await _chatHubApp.MessageReceived(new Message { MessageText = message });
-            }
-            else
-            {
-                await Clients.All.SendAsync("ReceiveMessage", Context.User.Identity.Name ?? "anonymous", message);
+                await Clients.All.SendAsync("ReceiveMessage", identityName, message);
             }
         }
     }

@@ -20,10 +20,10 @@ namespace Chat.Services.Services
             return queueManager;
         }
 
-        public Task MessageReceived(Message message)
+        public async Task<bool> SendMessage(Message message)
         {
             //If starts with / its a command. Should be sended to the ChatBot
-            if (message.MessageText.StartsWith("/"))
+            if (message.MessageText.Trim().StartsWith("/"))
             {
                 var queueMessage = new QueueMessage
                 {
@@ -31,8 +31,10 @@ namespace Chat.Services.Services
                     Queue = "ChatBot"
                 };
                 QueueManagerService().AddToQueue(queueMessage);
+                return false;
             }
-            return Task.CompletedTask;
+
+            return true;
         }
     }
 }
