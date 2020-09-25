@@ -16,7 +16,7 @@ namespace Chat.QueueManager.Services
         public QueueManagerService(IOptions<Settings> settings)
         {
             _settings = settings.Value;
-            var factory = new ConnectionFactory() { HostName = _settings.QueueSettings.Address };
+            var factory = new ConnectionFactory() { HostName = _settings.QueueUrl };
             var connection = factory.CreateConnection();
             _channel = connection.CreateModel();
         }
@@ -58,8 +58,6 @@ namespace Chat.QueueManager.Services
                                  autoAck: true,
                                  consumer: consumer);
 
-            Console.WriteLine(" Press [enter] to exit.");
-            Console.ReadLine();
             return Task.CompletedTask;
         }
     }
