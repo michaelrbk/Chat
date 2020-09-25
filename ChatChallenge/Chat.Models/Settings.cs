@@ -3,6 +3,7 @@
     public class Settings
     {
         public QueueSettings QueueSettings { get; set; }
+        public string StockWebServiceUrl { get; set; }
     }
     public class QueueSettings
     {

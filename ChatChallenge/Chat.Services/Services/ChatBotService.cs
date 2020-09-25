@@ -22,8 +22,7 @@ namespace Chat.Services.Services
 
         public Task ReceiveFromQueue()
         {
-            QueueManagerService().GetFromQueue("ChatBot");
-            return Task.CompletedTask;
+            return QueueManagerService().GetFromQueue("ChatBot");
         }
     }
 }
