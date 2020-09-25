@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Chat.CommandInterpreter\Chat.CommandInterpreter.csproj" />
     <ProjectReference Include="..\Chat.QueueManager\Chat.QueueManager.csproj" />
     <ProjectReference Include="..\Chat.WebService\Chat.WebService.csproj" />
   </ItemGroup>
