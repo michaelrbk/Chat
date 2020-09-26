@@ -31,7 +31,6 @@ namespace Chat.QueueProducer.Services
                                  routingKey: queueMessage.Queue,
                                  basicProperties: null,
                                  body: body);
-            //return Task.CompletedTask;
         }
     }
 }

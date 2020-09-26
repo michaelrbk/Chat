@@ -24,12 +24,11 @@ namespace ChatBotWorker
                 {
                     IConfiguration configuration = hostContext.Configuration;
                     services.Configure<Settings>(configuration.GetSection("SharedSettings"));
+
                     services.AddHostedService<Worker>();
-                    //App
+
                     services.AddTransient<IChatBotApp, ChatBotApp>();
-                    //Services
                     services.AddTransient<IChatBotService, ChatBotService>();
-                    //Infra
                     services.AddTransient<IQueueConsumerService, QueueConsumerService>();
                 });
     }

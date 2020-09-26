@@ -4,7 +4,6 @@ using Chat.QueueConsumer.Interfaces;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System;
 using System.Text;
 
 namespace Chat.QueueConsumer.Services
@@ -52,7 +51,6 @@ namespace Chat.QueueConsumer.Services
                 {
                     _command.InterpretCommand(message);
                 }
-                Console.WriteLine(" [x] Received {0}", message);
             };
             _channel.BasicConsume(queue: queue,
                                  autoAck: true,

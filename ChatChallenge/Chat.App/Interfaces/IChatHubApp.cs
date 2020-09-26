@@ -5,6 +5,6 @@ namespace Chat.App.Interfaces
 {
     public interface IChatHubApp
     {
-        Task<bool> SendMessage(Message message);
+        public Task SendMessage(Message message);
     }
 }

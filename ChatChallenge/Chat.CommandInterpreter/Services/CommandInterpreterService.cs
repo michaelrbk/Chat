@@ -14,12 +14,10 @@ namespace Chat.CommandInterpreter.Services
     {
         private static StockWebService _stockWS;
         private static QueueProducerService _queueProducerServices;
-        private static Settings _settings;
 
 
         public CommandInterpreterService(IOptions<Settings> settings)
         {
-            _settings = settings.Value;
             _queueProducerServices = new QueueProducerService(settings);
             _stockWS = new StockWebService(settings);
         }
@@ -64,7 +62,6 @@ namespace Chat.CommandInterpreter.Services
                 queueMessage.Message = "Invalid Command";
             }
             _queueProducerServices.AddToQueue(queueMessage);
-            //return Task.CompletedTask;
         }
 
     }

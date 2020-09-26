@@ -13,9 +13,10 @@ namespace Chat.App.App
             _chatHubService = chatHubService;
         }
 
-        public Task<bool> SendMessage(Message message)
+        public Task SendMessage(Message message)
         {
-            return _chatHubService.SendMessage(message);
+            _chatHubService.SendMessage(message);
+            return Task.CompletedTask;
         }
     }
 }

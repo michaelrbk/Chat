@@ -17,7 +17,9 @@ namespace ChatWebApp.Hub
         public async Task SendMessage(string message)
         {
             string identityName = Context.User.Identity.Name ?? "anonymous";
-            if (await _chatHubApp.SendMessage(new Message { MessageText = message, IdentityName = identityName }))
+            await _chatHubApp.SendMessage(new Message { MessageText = message, IdentityName = identityName });
+
+            if (!message.Trim().StartsWith("/"))
             {
                 await Clients.All.SendAsync("ReceiveMessage", identityName, message);
             }

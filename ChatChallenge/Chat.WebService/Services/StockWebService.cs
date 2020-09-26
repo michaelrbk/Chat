@@ -21,15 +21,17 @@ namespace Chat.WebService.Services
         public Task<Stock> GetStock(StockRequest request)
         {
             var stock = new Stock();
-            List<string> headers = new List<string>();
-            List<string> values = new List<string>();
             try
             {
+                List<string> headers;
+                List<string> values;
                 (headers, values) = SplitCSV(GetCSV(_settings.StockWebServiceUrl.Replace("{stock_code}", request.StockCode)));
                 stock.Symbol = values[headers.IndexOf("Symbol")];
 
-                NumberFormatInfo formatProvider = new NumberFormatInfo();
-                formatProvider.NumberDecimalSeparator = ".";
+                NumberFormatInfo formatProvider = new NumberFormatInfo
+                {
+                    NumberDecimalSeparator = "."
+                };
 
                 stock.DateTime = DateTime.ParseExact(values[headers.IndexOf("Date")] + " " + values[headers.IndexOf("Time")], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
                 stock.Open = Convert.ToDouble(values[headers.IndexOf("Open")], formatProvider);

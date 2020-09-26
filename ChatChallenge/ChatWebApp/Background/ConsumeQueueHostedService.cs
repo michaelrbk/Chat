@@ -15,7 +15,6 @@ namespace ChatWebApp.Background
     public class ConsumeQueueHostedService : BackgroundService
     {
         private readonly ILogger _logger;
-        private readonly IConnection _connection;
         private readonly IModel _channel;
         private readonly IHubContext<ChatHub> _hub;
         private static Settings _settings;
@@ -25,7 +24,6 @@ namespace ChatWebApp.Background
             _settings = settings.Value;
             _logger = loggerFactory.CreateLogger<ConsumeQueueHostedService>();
             var factory = new ConnectionFactory { HostName = _settings.QueueUrl };
-            _connection = factory.CreateConnection();
             var connection = factory.CreateConnection();
             _channel = connection.CreateModel();
             _hub = hub;

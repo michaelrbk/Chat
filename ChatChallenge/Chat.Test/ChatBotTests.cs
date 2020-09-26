@@ -26,7 +26,7 @@ namespace Chat.Test
         public void ChatBotTest()
         {
             _chatBotService.ReceiveFromQueue();
-            _output.WriteLine("teste");
+            _output.WriteLine("test");
             Assert.True(true);
         }
     }
