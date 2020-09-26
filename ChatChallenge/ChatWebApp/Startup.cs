@@ -5,6 +5,7 @@ using Chat.QueueConsumer.Interfaces;
 using Chat.QueueConsumer.Services;
 using Chat.Services.Interfaces;
 using Chat.Services.Services;
+using ChatWebApp.Background;
 using ChatWebApp.Data;
 using ChatWebApp.Hub;
 using Microsoft.AspNetCore.Builder;
@@ -46,6 +47,8 @@ namespace ChatWebApp
             services.AddTransient<IChatHubService, ChatHubService>();
             //Infra
             services.AddTransient<IQueueConsumerService, QueueConsumerService>();
+            services.AddHostedService<ConsumeQueueHostedService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,6 +73,7 @@ namespace ChatWebApp
             app.UseAuthentication();
             app.UseAuthorization();
 
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -78,6 +82,7 @@ namespace ChatWebApp
                 endpoints.MapRazorPages();
                 endpoints.MapHub<ChatHub>("/chat");
             });
+
         }
     }
 }
