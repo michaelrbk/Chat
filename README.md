@@ -5,12 +5,29 @@ Chat Challenge
 Chat Challenge using for the first time Rabbitmq and SignalR. 
 
 # Current Setup
-* With docker installed run
-* docker pull rabbitmq:3-management
-* docker run --rm -it --hostname my-rabbit -p 15672:15672 -p 5672:5672 rabbitmq:3-management
+* Using docker and Visual Studio 2019
 * Clone repository in Visual Studio
-* Run on visual studio both projects ChatBotWorker and ChatWebApp
-* See rabbit queue in http://localhost:15672 using username guest password guest
+* Setup the docker-compose as Startup project
+* Run project
+
+
+* **Alternative**
+* Run on console a rabbitmq docker
+* ```docker pull rabbitmq:3-management```
+* ```docker run --rm -it --hostname my-rabbit -p 15672:15672 -p 5672:5672 rabbitmq:3-management```
+* On Visual Studio on solution proprieties choose the Multiple Startup Projects with both projects ChatBotWorker and ChatWebApp
+
+
+* See Rabbitmq management in http://localhost:15672 using username guest password guest
+
+* For testing porpuses create new user or use:
+```
+user: test1@email.com
+password: xPmrZHDfPuuu#@9
+
+user: test2@email.com
+password: #vJ3Z.h.6Vm$6uP
+```
 
 # Mandatory Features
 * Allow registered users to log in and talk with other users in a chatroom.
