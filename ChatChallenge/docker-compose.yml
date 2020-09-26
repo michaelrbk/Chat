@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  chatbotworker:
+    image: ${DOCKER_REGISTRY-}chatbotworker
+    build:
+      context: .
+      dockerfile: ChatBotWorker/Dockerfile
+    depends_on:
+      - rabbitmq
+
+  chatwebapp:
+    image: ${DOCKER_REGISTRY-}chatwebapp
+    build:
+      context: .
+      dockerfile: ChatWebApp/Dockerfile
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    ports:
+      - "4369:4369"
+      - "5671:5671"
+      - "5672:5672"
+      - "15671:15671"
+      - "15672:15672"
+      - "25672:25672"
