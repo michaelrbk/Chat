@@ -4,7 +4,7 @@ Chat Challenge
 # Describe
 Chat Challenge using for the first time Rabbitmq and SignalR. 
 
-# Current Setup
+# Setup
 * Using docker and Visual Studio 2019
 * Clone repository in Visual Studio
 * Setup the docker-compose as Startup project
