@@ -4,7 +4,9 @@ using Chat.Models.Stock;
 using Chat.QueueProducer.Services;
 using Chat.WebService.Services;
 using Microsoft.Extensions.Options;
+using System;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace Chat.CommandInterpreter.Services
 {
@@ -31,12 +33,15 @@ namespace Chat.CommandInterpreter.Services
                 Queue = "ChatHub"
             };
 
-            message = message.Replace(" ", "").ToLower();
-            if (message.ToLower().StartsWith("/stock="))
+            //Remove special caracters
+            message = message.Replace(" ", "");
+            message = Regex.Replace(message, @"[^\w\.@-]", "", RegexOptions.None, TimeSpan.FromSeconds(1.5));
+
+            if (message.StartsWith("stock"))
             {
                 var stockRequest = new StockRequest
                 {
-                    StockCode = message.Replace("/stock=", "")
+                    StockCode = message.Replace("stock", "")
                 };
 
                 //Get Stock Value from webService
