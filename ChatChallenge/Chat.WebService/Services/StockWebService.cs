@@ -23,18 +23,22 @@ namespace Chat.WebService.Services
             var stock = new Stock();
             List<string> headers = new List<string>();
             List<string> values = new List<string>();
-            (headers, values) = SplitCSV(GetCSV(_settings.StockWebServiceUrl.Replace("{stock_code}", request.StockCode)));
-            stock.Symbol = values[headers.IndexOf("Symbol")];
+            try
+            {
+                (headers, values) = SplitCSV(GetCSV(_settings.StockWebServiceUrl.Replace("{stock_code}", request.StockCode)));
+                stock.Symbol = values[headers.IndexOf("Symbol")];
 
-            var cultureInfo = new CultureInfo("en-US");
-            stock.DateTime = DateTime.ParseExact(values[headers.IndexOf("Date")] + " " + values[headers.IndexOf("Time")], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+                NumberFormatInfo formatProvider = new NumberFormatInfo();
+                formatProvider.NumberDecimalSeparator = ".";
 
-            stock.Open = Convert.ToDouble(values[headers.IndexOf("Open")]);
-            stock.Close = Convert.ToDouble(values[headers.IndexOf("Close")]);
-            stock.High = Convert.ToDouble(values[headers.IndexOf("High")]);
-            stock.Low = Convert.ToDouble(values[headers.IndexOf("Low")]);
-            stock.Volume = Convert.ToDouble(values[headers.IndexOf("Volume")]);
-
+                stock.DateTime = DateTime.ParseExact(values[headers.IndexOf("Date")] + " " + values[headers.IndexOf("Time")], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+                stock.Open = Convert.ToDouble(values[headers.IndexOf("Open")], formatProvider);
+                stock.Close = Convert.ToDouble(values[headers.IndexOf("Close")], formatProvider);
+                stock.High = Convert.ToDouble(values[headers.IndexOf("High")], formatProvider);
+                stock.Low = Convert.ToDouble(values[headers.IndexOf("Low")], formatProvider);
+                stock.Volume = Convert.ToDouble(values[headers.IndexOf("Volume")], formatProvider);
+            }
+            catch (Exception) { }
 
             return Task.FromResult(stock);
         }
@@ -51,7 +55,7 @@ namespace Chat.WebService.Services
             return results;
         }
 
-        public static (List<string>, List<string>) SplitCSV(string file)
+        private static (List<string>, List<string>) SplitCSV(string file)
         {
             string[] tempStringLines;
             List<string> headers = new List<string>();

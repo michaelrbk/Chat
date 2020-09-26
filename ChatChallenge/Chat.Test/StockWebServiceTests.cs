@@ -37,7 +37,23 @@ namespace Chat.Test
                 WriteIndented = true
             }));
 
-            Assert.True(stock.Symbol.Equals("AAPL.US"));
+            Assert.True(stock.Open > 0);
+        }
+        [Fact]
+        public void StockWebServiceTest2()
+        {
+            var stockRequest = new StockRequest
+            {
+                StockCode = "aapl.US"
+            };
+            Stock stock = _stockWS.GetStock(stockRequest).Result;
+            _output.WriteLine(JsonSerializer.Serialize(stock, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            }));
+
+            Assert.True(stock.Open > 0);
         }
     }
 }

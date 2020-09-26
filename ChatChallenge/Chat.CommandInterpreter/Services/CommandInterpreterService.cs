@@ -4,6 +4,7 @@ using Chat.Models.Stock;
 using Chat.QueueProducer.Services;
 using Chat.WebService.Services;
 using Microsoft.Extensions.Options;
+using System.Globalization;
 
 namespace Chat.CommandInterpreter.Services
 {
@@ -42,9 +43,9 @@ namespace Chat.CommandInterpreter.Services
                 Stock stock = _stockWS.GetStock(stockRequest).Result;
 
 
-                if (stock.Close > 0)
+                if (stock.Open > 0)
                 {
-                    queueMessage.Message = $"{stock.Symbol} quote is {stock.Close} per share";
+                    queueMessage.Message = $"{stock.Symbol} quote is ${stock.Open.ToString("G", CultureInfo.InvariantCulture)} per share";
                 }
                 else
                 {
